@@ -4,16 +4,32 @@ import SkillPage from "./pages/SkillPage";
 import StatsPage from "./pages/StatsPage";
 import { useEffect, useState } from "react";
 import "./App.css";
+import BackgroundSlideshow from "./components/BackgroundSlideshow";
 
 export default function App() {
+
+  const wallpapers = [
+    "/images/backgrounds/bg1.jpg",
+    "/images/backgrounds/bg2.jpg",
+    "/images/backgrounds/bg3.jpg",
+    "/images/backgrounds/bg4.jpg",
+  ];
+
+
   const [dark, setDark] = useState(true); // dark mode default
 
   useEffect(() => {
     document.documentElement.dataset.theme = dark ? "dark" : "light";
   }, [dark]);
 
+
   return (
     <>
+{/* Background slideshow */}
+<BackgroundSlideshow images={wallpapers} interval={20000} />
+
+
+
       {/* Fixed Nav */}
       <header className="navbar">
         <div className="navbar-left">

@@ -60,16 +60,43 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
             gap: 20,
           }}
         >
-          <Link to="/skill">
-            <button style={{ padding: "12px 24px", fontSize: 16 }}>
-              Skill Rating Leaderboard
-            </button>
-          </Link>
+         <Link to="/skill">
+  <button
+    style={{
+      padding: "12px 24px",
+      fontSize: 16,
+      background: "rgba(255, 255, 255, 0.1)", // semi-transparent white
+      color: "#fff",
+      border: "1px solid rgba(255, 255, 255, 0.3)",
+      borderRadius: 8,
+      backdropFilter: "blur(6px)", // frosted glass effect
+      cursor: "pointer",
+      transition: "all 0.25s ease",
+    }}
+    className="leaderboard-btn"
+  >
+    Skill Rating Leaderboard
+  </button>
+</Link>
 
-          <Link to="/stats">
-            <button style={{ padding: "12px 24px", fontSize: 16 }}>
-              Statistical Leaderboard
-            </button>
+<Link to="/stats">
+  <button
+    style={{
+      padding: "12px 24px",
+      fontSize: 16,
+      background: "rgba(255, 255, 255, 0.1)",
+      color: "#fff",
+      border: "1px solid rgba(255, 255, 255, 0.3)",
+      borderRadius: 8,
+      backdropFilter: "blur(6px)",
+      cursor: "pointer",
+      transition: "all 0.25s ease",
+    }}
+    className="leaderboard-btn"
+  >
+    Statistical Leaderboard
+  </button>
+
           </Link>
         </div>
       </div>
@@ -176,13 +203,12 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
       {/* HOVER EFFECT */}
       <style>
         {`
-          .yt-hover:hover {
-            transform: scale(1.04);
-            box-shadow:
-              0 0 0 1px rgba(255,255,255,0.3),
-              0 0 32px rgba(0,150,255,0.7);
-          }
-        `}
+  .leaderboard-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+  }
+`}
       </style>
     </div>
   );
