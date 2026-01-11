@@ -27,7 +27,7 @@ export const handler = async () => {
       console.log("DB connected");
   
       const [rows] = await connection.execute(
-        `SELECT * FROM overall_player_skill_rating ORDER BY final_skill_rating DESC`
+        `SELECT video_id, thumbnail_path FROM commentary_games_video ORDER BY id DESC LIMIT 1`
       );
   
       await connection.end();

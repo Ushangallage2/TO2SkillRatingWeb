@@ -23,7 +23,7 @@ export default function App() {
         </div>
         <nav className="navbar-right">
           <Link to="/skill" className="nav-link">
-            Skill Leaderboard
+            Skill Rating Leaderboard
           </Link>
           <Link to="/stats" className="nav-link">
             Stats Leaderboard
