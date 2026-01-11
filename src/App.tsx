@@ -34,7 +34,7 @@ export default function App() {
       <header className="navbar">
         <div className="navbar-left">
           <Link to="/" className="logo">
-            🏆 Leaderboards
+            🏆 TO2 MAYHEM
           </Link>
         </div>
         <nav className="navbar-right">

@@ -40,7 +40,7 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
       style={{
         marginTop: 80,
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "left",
         alignItems: "flex-start",
         gap: 48,
         flexWrap: "wrap",
@@ -48,16 +48,16 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
       }}
     >
       {/* LEFT SIDE */}
-      <div style={{ textAlign: "center", minWidth: 320 }}>
-        <h1>🏆 Player Leaderboards</h1>
-        <p>Select a leaderboard</p>
+      <div style={{ textAlign: "left", minWidth: 320,marginBottom: 60 }}>
+        <h1>🏆 UTWAT  OFFCIAL FOR MAYHEM</h1>
+        
 
         <div
           style={{
             marginTop: 40,
             display: "flex",
             justifyContent: "center",
-            gap: 20,
+            gap: 40,
           }}
         >
          <Link to="/skill">
@@ -106,7 +106,8 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
   style={{
     width: VIDEO_WIDTH,
     flexShrink: 0,
-    marginLeft: 150,
+    marginLeft: 800,
+    marginTop: -180,
     minHeight: VIDEO_HEIGHT, // <-- same as iframe height
     background: "#111",
     borderRadius: 16,
@@ -196,7 +197,7 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
       textAlign: "center",
     }}
   >
-    🎬 MAYHAM official Video
+    🎬 MAYHEM official Video
   </div>
 </div>
 

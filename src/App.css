@@ -31,20 +31,102 @@ body {
 }
 
 /* ----- Nav ----- */
+/* ===== Glass Navbar ===== */
 .navbar {
   position: fixed;
   top: 0;
-  width: 97%;
+  left: 0;
+  right: 0;
   height: 64px;
-  background-color: var(--header-bg);
-  color: var(--header-text);
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  justify-content: space-between;
+
+  padding: 0 28px;
   z-index: 1000;
+
+  /* Glass effect */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Logo */
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 0.6px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Right nav */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Nav links */
+.nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* Glow hover */
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 0 18px rgba(0, 150, 255, 0.6);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 13px;
+
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(89, 83, 83, 0.3),
+    0 0 22px rgba(255, 255, 255, 0.4);
+}
+
+/* Push page content below navbar */
+.page-content {
+  padding-top: 80px;
+}
+
 
 .logo {
   font-size: 24px;
