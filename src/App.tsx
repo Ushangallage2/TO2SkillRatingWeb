@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
-import SkillPage from "./pages/Skillpage";
+import SkillPage from "./pages/Skillpage"
 import StatsPage from "./pages/StatsPage";
 import { useEffect, useState } from "react";
 import "./App.css";

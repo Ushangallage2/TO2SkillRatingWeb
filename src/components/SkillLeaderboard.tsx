@@ -33,7 +33,7 @@ const TIER_DEFINITIONS = [
 export default function SkillLeaderboard() {
   const [data, setData] = useState<SkillRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [height, setHeight] = useState(window.innerHeight - 96);
+  const [_height, setHeight] = useState(window.innerHeight - 96);
 
   useEffect(() => {
     const onResize = () => setHeight(window.innerHeight - 96);

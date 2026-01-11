@@ -1,5 +1,3 @@
-import type { Handler } from "@netlify/functions";
-import { db } from "./_db";
 import mysql from "mysql2/promise";
 
 export const handler = async () => {
