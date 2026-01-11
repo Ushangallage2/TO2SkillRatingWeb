@@ -5,6 +5,7 @@ import StatsPage from "./pages/StatsPage";
 import { useEffect, useState } from "react";
 import "./App.css";
 import BackgroundSlideshow from "./components/BackgroundSlideshow";
+import MatchSimulator from "./pages/MatchSimulator";
 
 export default function App() {
 
@@ -44,6 +45,22 @@ export default function App() {
           <Link to="/stats" className="nav-link">
             Stats Leaderboard
           </Link>
+
+          <button
+  className="nav-link glass-btn"
+  style={{
+    backgroundColor: "black",
+    color: "white",
+    padding: "12px 24px",   // makes background stretch around text
+    borderRadius: "8px",    // optional: rounded corners
+    minWidth: "200px"       // optional: force a wider background
+  }}
+
+  onClick={() => window.open('/match-simulator', '_blank', 'noopener,noreferrer')}
+>
+  🎮 Match Simulator
+</button>
+
           <button className="theme-toggle" onClick={() => setDark(d => !d)}>
             {dark ? "☀ Light" : "🌙 Dark"}
           </button>
@@ -56,6 +73,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/skill" element={<SkillPage />} />
           <Route path="/stats" element={<StatsPage />} />
+          <Route path="/match-simulator" element={<MatchSimulator />} />
         </Routes>
       </main>
     </>

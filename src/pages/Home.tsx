@@ -10,207 +10,221 @@ export default function Home() {
       try {
         const res = await fetch("/.netlify/functions/commentary-game-video");
         const json = await res.json();
-  
-        console.log("VIDEO API RESPONSE:", json);
-  
-        // ✅ handle both response shapes
-        const row =
-          Array.isArray(json)
-            ? json[0]
-            : json?.Rows?.[0];
-  
-        if (row?.video_id) {
-          setVideoId(row.video_id);
-        }
+
+        const row = Array.isArray(json) ? json[0] : json?.Rows?.[0];
+        if (row?.video_id) setVideoId(row.video_id);
       } catch (err) {
         console.error("Failed to load video", err);
       }
     }
-  
+
     loadVideo();
   }, []);
-  
-  // calculate desired height once
-const VIDEO_WIDTH = 500;
-const VIDEO_HEIGHT = VIDEO_WIDTH * 12 / 16; // 16:9 aspect ratio
 
+  const VIDEO_WIDTH = 630;
+  const VIDEO_HEIGHT = (VIDEO_WIDTH * 9) / 16;
 
   return (
     <div
       style={{
-        marginTop: 80,
+        marginTop: 90,
         display: "flex",
-        justifyContent: "left",
         alignItems: "flex-start",
-        gap: 48,
-        flexWrap: "wrap",
-        padding: "0 24px",
+        gap: 120,
+        padding: "0 80px",
       }}
     >
       {/* LEFT SIDE */}
-      <div style={{ textAlign: "left", minWidth: 320,marginBottom: 60 }}>
-        <h1>🏆 UTWAT  OFFCIAL FOR MAYHEM</h1>
-        
+      <div style={{ maxWidth: 520 }}>
+        <h1>🏆 UTWAT OFFICIAL FOR MAYHEM</h1>
 
-        <div
-          style={{
-            marginTop: 40,
-            display: "flex",
-            justifyContent: "center",
-            gap: 40,
-          }}
-        >
-         <Link to="/skill">
-  <button
-    style={{
-      padding: "12px 24px",
-      fontSize: 16,
-      background: "rgba(255, 255, 255, 0.1)", // semi-transparent white
-      color: "#fff",
-      border: "1px solid rgba(255, 255, 255, 0.3)",
-      borderRadius: 8,
-      backdropFilter: "blur(6px)", // frosted glass effect
-      cursor: "pointer",
-      transition: "all 0.25s ease",
-    }}
-    className="leaderboard-btn"
-  >
-    Skill Rating Leaderboard
-  </button>
-</Link>
+        {/* BUTTON GROUP */}
+        <div style={{ marginTop: 50 }}>
+          {/* TOP ROW */}
+          <div
+            style={{
+              display: "flex",
+              gap: 40,
+            }}
+          >
+            <Link to="/skill">
+              <button className="leaderboard-btn">
+                Skill Rating Leaderboard
+              </button>
+            </Link>
 
-<Link to="/stats">
-  <button
-    style={{
-      padding: "12px 24px",
-      fontSize: 16,
-      background: "rgba(255, 255, 255, 0.1)",
-      color: "#fff",
-      border: "1px solid rgba(255, 255, 255, 0.3)",
-      borderRadius: 8,
-      backdropFilter: "blur(6px)",
-      cursor: "pointer",
-      transition: "all 0.25s ease",
-    }}
-    className="leaderboard-btn"
-  >
-    Statistical Leaderboard
-  </button>
+            <Link to="/stats">
+              <button className="leaderboard-btn">
+                Statistical Leaderboard
+              </button>
+            </Link>
+          </div>
 
-          </Link>
+          {/* BOTTOM BUTTON */}
+          <div style={{ marginTop: 32 }}>
+
+
+
+          <button
+  className="match-rating-btn"
+  onClick={() => window.open('/match-simulator', '_blank', 'noopener,noreferrer')}
+>
+  ⭐ Check Your Match Ratings
+</button>
+
+
+
+          </div>
         </div>
       </div>
 
-      {/* RIGHT SIDE – VIDEO (FORCED VISIBLE) */}
-      <div
-  style={{
-    width: VIDEO_WIDTH,
-    flexShrink: 0,
-    marginLeft: 800,
-    marginTop: -180,
-    minHeight: VIDEO_HEIGHT, // <-- same as iframe height
-    background: "#111",
-    borderRadius: 16,
-    padding: 15,
-    border: "1px solid rgba(255,255,255,0.25)",
-    boxShadow: "0 25px 50px rgba(0,0,0,0.7)",
-    color: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  }}
->
-  {!videoId && (
-    <div
-      style={{
-        height: VIDEO_HEIGHT,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        opacity: 0.5,
-      }}
-    >
-      Loading video…
-    </div>
-  )}
-
-  {videoId && !play && (
-    <div
-      onClick={() => setPlay(true)}
-      className="yt-hover"
-      style={{
-        position: "relative",
-        cursor: "pointer",
-        borderRadius: 12,
-        overflow: "hidden",
-        width: "100%",
-        height: VIDEO_HEIGHT, // <-- always same height
-      }}
-    >
-      <img
-        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-        alt="Latest Match"
-        style={{
-          width: "100%",
-          height: "100%", // <-- cover full container
-          objectFit: "cover",
-          display: "block",
-        }}
-      />
-
+      {/* RIGHT SIDE – VIDEO */}
       <div
         style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 64,
+          width: VIDEO_WIDTH,
+          minHeight: VIDEO_HEIGHT,
+          background: "#111",
+          borderRadius: 18,
+          padding: 16,
+          border: "1px solid rgba(255,255,255,0.25)",
+          boxShadow: "0 30px 60px rgba(0,0,0,0.7)",
           color: "#fff",
-          textShadow: "0 6px 20px rgba(0,0,0,0.8)",
-          pointerEvents: "none",
         }}
       >
-        ▶
+        {!videoId && (
+          <div
+            style={{
+              height: VIDEO_HEIGHT,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: 0.5,
+            }}
+          >
+            Loading video…
+          </div>
+        )}
+
+        {videoId && !play && (
+          <div
+            className="yt-hover"
+            onClick={() => setPlay(true)}
+            style={{
+              position: "relative",
+              cursor: "pointer",
+              borderRadius: 14,
+              overflow: "hidden",
+              height: VIDEO_HEIGHT,
+            }}
+          >
+            <img
+              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+              alt="Latest Match"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 72,
+                textShadow: "0 6px 24px rgba(0,0,0,0.9)",
+              }}
+            >
+              ▶
+            </div>
+          </div>
+        )}
+
+        {videoId && play && (
+          <iframe
+            width="100%"
+            height={VIDEO_HEIGHT}
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`}
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            style={{ borderRadius: 14 }}
+          />
+        )}
+
+        <div
+          style={{
+            marginTop: 10,
+            fontSize: 13,
+            opacity: 0.85,
+            textAlign: "center",
+          }}
+        >
+          🎬 MAYHEM Official Video
+        </div>
       </div>
-    </div>
-  )}
 
-  {videoId && play && (
-    <iframe
-      width="100%"
-      height={VIDEO_HEIGHT}
-      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`}
-      title="Latest Match Video"
-      frameBorder="0"
-      allow="autoplay; encrypted-media"
-      allowFullScreen
-      style={{ borderRadius: 12 }}
-    />
-  )}
+      {/* STYLES */}
+      <style>{`
+        .leaderboard-btn {
+          padding: 14px 26px;
+          font-size: 16px;
+          background: rgba(255,255,255,0.1);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.35);
+          border-radius: 10px;
+          backdrop-filter: blur(6px);
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
 
-  <div
-    style={{
-      marginTop: 10,
-      fontSize: 13,
-      opacity: 0.85,
-      textAlign: "center",
-    }}
-  >
-    🎬 MAYHEM official Video
-  </div>
-</div>
+        .leaderboard-btn:hover {
+          background: rgba(255,255,255,0.22);
+          box-shadow: 0 0 16px rgba(255,255,255,0.6);
+          transform: scale(1.06);
+        }
 
-      {/* HOVER EFFECT */}
-      <style>
-        {`
-  .leaderboard-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
-    transform: scale(1.05);
-  }
-`}
-      </style>
+        .match-rating-btn {
+          padding: 16px 40px;
+          font-size: 17px;
+          font-weight: 600;
+          color: #fff;
+          background: rgba(255,255,255,0.12);
+          border: 1px solid rgba(255,255,255,0.4);
+          border-radius: 14px;
+          backdrop-filter: blur(10px);
+          cursor: pointer;
+          transition: transform 0.25s ease;
+        }
+
+        .match-rating-btn:hover {
+          transform: scale(1.1);
+          animation: glowShift 2.5s linear infinite;
+        }
+
+        @keyframes glowShift {
+          0% {
+            background: linear-gradient(120deg, rgba(0,160,255,0.4), rgba(255,255,255,0.15));
+            box-shadow: 0 0 18px rgba(0,160,255,0.7);
+          }
+          50% {
+            background: linear-gradient(120deg, rgba(255,0,150,0.4), rgba(255,255,255,0.15));
+            box-shadow: 0 0 26px rgba(255,0,150,0.7);
+          }
+          100% {
+            background: linear-gradient(120deg, rgba(0,160,255,0.4), rgba(255,255,255,0.15));
+            box-shadow: 0 0 18px rgba(0,160,255,0.7);
+          }
+        }
+
+        .yt-hover:hover {
+          transform: scale(1.04);
+          box-shadow: 0 0 28px rgba(0,150,255,0.6);
+        }
+      `}</style>
     </div>
   );
 }

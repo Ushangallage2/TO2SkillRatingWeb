@@ -83,7 +83,7 @@ body {
 
 /* Nav links */
 .nav-link {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(251, 251, 251, 0.85);
   text-decoration: none;
   font-size: 14px;
   padding: 8px 14px;
@@ -91,6 +91,8 @@ body {
   transition: all 0.25s ease;
   position: relative;
 }
+
+
 
 /* Glow hover */
 .nav-link:hover {
@@ -108,7 +110,7 @@ body {
   border-radius: 12px;
   padding: 6px 12px;
   cursor: pointer;
-  color: #fff;
+  color: #dad7d7;
   font-size: 13px;
 
   backdrop-filter: blur(8px);
