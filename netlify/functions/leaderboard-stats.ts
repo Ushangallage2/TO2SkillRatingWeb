@@ -1,5 +1,6 @@
-import type{ Handler } from "@netlify/functions";
+import type { Handler } from "@netlify/functions";
 import { db } from "./_db";
+import { createRedis } from "./redis";
 
 const ALLOWED_SORT_FIELDS = [
   "XPG",
@@ -10,12 +11,27 @@ const ALLOWED_SORT_FIELDS = [
 ];
 
 export const handler: Handler = async (event) => {
-  try {
-    const sort =
-      event.queryStringParameters?.sort ?? "overall_win_ratio";
+  const sort =
+    event.queryStringParameters?.sort ?? "overall_win_ratio";
 
-    if (!ALLOWED_SORT_FIELDS.includes(sort)) {
-      return { statusCode: 400, body: "Invalid sort field" };
+  if (!ALLOWED_SORT_FIELDS.includes(sort)) {
+    return { statusCode: 400, body: "Invalid sort field" };
+  }
+
+  const cacheKey = `leaderboard:${sort}`;
+  const redis = createRedis();
+
+  try {
+    if (redis) {
+      try {
+        await redis.connect();
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+          return { statusCode: 200, body: cached };
+        }
+      } catch {
+        // silently fall through
+      }
     }
 
     const [rows] = await db.query(`
@@ -36,14 +52,21 @@ export const handler: Handler = async (event) => {
       ORDER BY ${sort} DESC
     `);
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(rows),
-    };
+    if (redis) {
+      try {
+        await redis.set(cacheKey, JSON.stringify(rows), "EX", 60);
+        console.log("Redis cache hit");
+      } catch {}
+    }
+
+    return { statusCode: 200, body: JSON.stringify(rows) };
   } catch (err: any) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+  } finally {
+    if (redis) {
+      try {
+        await redis.quit();
+      } catch {}
+    }
   }
 };

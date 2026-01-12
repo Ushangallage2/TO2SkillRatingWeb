@@ -35,7 +35,7 @@ export default function App() {
       <header className="navbar">
         <div className="navbar-left">
           <Link to="/" className="logo">
-            🏆 TO2 MAYHEM
+          .𖥔 ݁ 🪐˖ MartianGames
           </Link>
         </div>
         <nav className="navbar-right">
