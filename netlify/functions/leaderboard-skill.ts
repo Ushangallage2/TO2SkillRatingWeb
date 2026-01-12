@@ -1,6 +1,5 @@
 import { createRedis } from "./redis";
 import { db } from "./_db";
-import { error } from "console";
 
 export const handler = async () => {
   console.log("=== leaderboard-skill invoked ===");
