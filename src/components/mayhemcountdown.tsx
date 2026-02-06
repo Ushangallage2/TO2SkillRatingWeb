@@ -6,7 +6,7 @@ type Props = {
   timezone: string;
 };
 
-export default function MayhemCountdown({ timezone }: Props) {
+export default function MayhemCountdown({ }: Props) {
   const [target, setTarget] = useState<Date | null>(null);
   const [label, setLabel] = useState("LOADING…");
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
