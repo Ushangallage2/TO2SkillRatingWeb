@@ -29,7 +29,7 @@ export const handler = async () => {
       try {
         const cached = await redis.get(cacheKey);
         if (cached) {
-          console.log("Redis cache hit");
+          console.log("Redis cache hit", cached);
           return {
             statusCode: 200,
             body: cached,
@@ -40,26 +40,22 @@ export const handler = async () => {
       }
     }
 
-    // 2️⃣ Fetch from DB
-    const [rows]: any = await db.execute(
-      `
-      SELECT countdown_to
+    // 2️⃣ Fetch from DB, force string format
+    const [rows]: any = await db.execute(`
+      SELECT DATE_FORMAT(countdown_to, '%Y-%m-%d %H:%i:%s') AS countdown_to
       FROM countdown
       ORDER BY id DESC
       LIMIT 1
-      `
-    );
+    `);
 
     let countdownTo = null;
 
     if (rows?.length && rows[0].countdown_to) {
       const value = rows[0].countdown_to;
+      console.log("Value", value);
 
-      if (
-        value !== DUMMY_NO_MAYHEM &&
-        value !== null
-      ) {
-        countdownTo = value;
+      if (value !== DUMMY_NO_MAYHEM && value !== null) {
+        countdownTo = value; // already a plain string
       }
     }
 

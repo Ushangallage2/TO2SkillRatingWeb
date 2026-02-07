@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { DateTime } from "luxon";
 
 const DUMMY_NO_MAYHEM = "1900-07-01 00:00:00";
 
@@ -6,8 +7,8 @@ type Props = {
   timezone: string;
 };
 
-export default function MayhemCountdown({ }: Props) {
-  const [target, setTarget] = useState<Date | null>(null);
+export default function MayhemCountdown({ timezone }: Props) {
+  const [target, setTarget] = useState<DateTime | null>(null);
   const [label, setLabel] = useState("LOADING…");
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
   const totalSecondsRef = useRef<number>(0);
@@ -26,14 +27,21 @@ export default function MayhemCountdown({ }: Props) {
           return;
         }
 
-        const dt = new Date(json.countdown_to);
-        setTarget(dt);
-
-        const now = new Date();
-        totalSecondsRef.current = Math.max(
-          Math.floor((dt.getTime() - now.getTime()) / 1000),
-          1
-        );
+        // Parse target in given timezone
+        // In loadCountdown
+        // Parse target in NJ time
+const dt = DateTime.fromFormat(json.countdown_to, "yyyy-MM-dd HH:mm:ss", {
+    zone: "America/New_York"
+  });
+  console.log("dt", dt);
+  setTarget(dt);
+  
+  // Compare against now in NJ time
+  const now = DateTime.now().setZone("America/New_York");
+  totalSecondsRef.current = Math.max(
+    Math.floor(dt.diff(now, "seconds").seconds),
+    1
+  );
       } catch (e) {
         console.log("Countdown fetch failed", e);
         setLabel("NO MAYHEM SCHEDULED");
@@ -44,15 +52,15 @@ export default function MayhemCountdown({ }: Props) {
     loadCountdown();
     const poll = setInterval(loadCountdown, 10000);
     return () => clearInterval(poll);
-  }, []);
+  }, [timezone]);
 
   // --- Countdown tick ---
   useEffect(() => {
     if (!target) return;
 
     const timer = setInterval(() => {
-      const now = new Date();
-      const diff = Math.floor((target.getTime() - now.getTime()) / 1000);
+      const now = DateTime.now().setZone(timezone);
+      const diff = Math.floor(target.diff(now, "seconds").seconds);
 
       if (diff <= 0) {
         setLabel("🔥 MAYHEM STARTED!");
@@ -70,13 +78,13 @@ export default function MayhemCountdown({ }: Props) {
 
       setLabel(
         `${days}d ${hours.toString().padStart(2, "0")}h ` +
-        `${minutes.toString().padStart(2, "0")}m ` +
-        `${seconds.toString().padStart(2, "0")}s`
+          `${minutes.toString().padStart(2, "0")}m ` +
+          `${seconds.toString().padStart(2, "0")}s`
       );
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [target]);
+  }, [target, timezone]);
 
   // --- Heartbeat intensity logic ---
   let pulseClass = "pulse-soft";
@@ -102,17 +110,14 @@ export default function MayhemCountdown({ }: Props) {
           transform-origin: center;
         }
 
-        /* Normal subtle pulse */
         .pulse-soft {
           animation: pulseSoft 2.5s ease-in-out infinite;
         }
 
-        /* Closer = faster heartbeat */
         .pulse-strong {
           animation: pulseStrong 1.2s ease-in-out infinite;
         }
 
-        /* Last minute = adrenaline */
         .pulse-insane {
           animation: pulseInsane 0.6s ease-in-out infinite;
           color: #ff5555;

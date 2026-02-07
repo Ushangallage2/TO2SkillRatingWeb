@@ -40,7 +40,7 @@ export default function Home() {
           pointerEvents: "none", // clicks pass through
         }}
       >
-        <MayhemCountdown timezone="UTC" />
+        <MayhemCountdown timezone="America/New_York" />
       </div>
   
       {/* MAIN PAGE CONTENT */}

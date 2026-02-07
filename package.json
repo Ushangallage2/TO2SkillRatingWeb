@@ -21,6 +21,7 @@
     "@netlify/functions": "^5.1.2",
     "@tanstack/react-table": "^8.21.3",
     "ioredis": "^5.9.1",
+    "luxon": "^3.7.2",
     "mysql2": "^3.16.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
